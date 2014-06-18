@@ -1,0 +1,43 @@
+/*****8grading style************/
+.left-pane{
+  position: absolute;
+  left: 0px;
+  padding: 10px;
+  width: 48%;
+  height: 400px;
+  
+}
+
+.right-pane{
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  padding: 10px;
+  width: 49%;
+  height: 98%;
+  background-color: rgb(230,230,230);
+}
+
+
+.stud-info-panel{
+    position: relative;
+    padding: 0px;
+    height: auto auto;
+    background:rgba(0,0,0,.1)
+    border-bottom: 1px solid rgb(0,0,0);
+}
+
+#stud-grade-panel{
+    position: relative;
+    margin-top: 20px;
+    width: 100%;
+    height: auto auto;
+}
+
+
+#sch-year-select{
+    position: relative;
+    left:5px;
+    margin-top: 10px;
+    width: 95%;
+}

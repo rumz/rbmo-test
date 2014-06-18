@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+TEMPLATE_PATH = os.path.join(BASE_DIR, 'templates')
+STATIC_PATH   = os.path.join(BASE_DIR, 'static')
 
 
 # Quick-start development settings - unsuitable for production
@@ -24,6 +26,8 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE=True
+
 ALLOWED_HOSTS = []
 
 
@@ -36,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rbmo',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -51,14 +56,20 @@ ROOT_URLCONF = 'rbmo.urls'
 
 WSGI_APPLICATION = 'rbmo.wsgi.application'
 
-
+TEMPLATE_DIRS = (TEMPLATE_PATH.replace('\\','/'),)
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'rbmo',                      # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': 'postgres',
+        #'PASSWORD': 'DEVELOPERS',
+        'PASSWORD': 'byrenx',
+        'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '5432',                      # Set to empty string for default.
     }
 }
 
@@ -76,7 +87,13 @@ USE_L10N = True
 USE_TZ = True
 
 
+MEDIA_URL = '/media/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = ( STATIC_PATH.replace('\\','/'),
+   #'E:/Projects/pis_system/templates/static',
+   # '/home/rasmer/PycharmProjects/pis_system/templates/static',
+)

@@ -1,0 +1,20 @@
+.profile-panel{
+    background-color:#F7F7F9;
+    height: auto auto;
+    padding-bottom: 20px;
+    border:1px solid #E1E1E8;
+}
+
+.form-panel{
+    background-olor: #F7F7F9;
+    border:1px solid #E1E1E8;
+}
+
+.form-panel .header{
+    padding-bottom: 10px;
+    border-bottom: 1px solid #E1E1E8;
+}
+
+.form-panel .content{
+    padding-top: 10px;
+}

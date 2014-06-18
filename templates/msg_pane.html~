@@ -1,0 +1,5 @@
+{%if s_msg%}
+  <p class="alert alert-success">
+    
+  </p>
+{%endif%}
