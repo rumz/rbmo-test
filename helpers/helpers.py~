@@ -1,4 +1,6 @@
 from django.db import connection
+import time
+from datetime import datetime
 
 def has_permission(user_id, action, target):
     cursor = connection.cursor()
@@ -11,7 +13,7 @@ def has_permission(user_id, action, target):
 def get_allowed_tabs(user_id):
     tabs=[]
     if has_permission(user_id, 'view', 'user'):
-        tabs.append({'tag': 'Users', 'link': '/admin/home'})
+        tabs.append({'tag': 'Users', 'link': '/admin/users'})
     if has_permission(user_id, 'view', 'agency information'):
         tabs.append({'tag': 'Agency/Office', 'link': '/admin/agencies'})
     if has_permission(user_id, 'view', 'transaction history'):
@@ -31,8 +33,5 @@ def get_allowed_tabs(user_id):
         reports.append({'tag': 'List of Agencies with Complete Documents', 'link': ''})
     tabs.append({'tag':'Reports', 'menus':reports})
     return tabs
-    
-    
-    
-        
+            
     

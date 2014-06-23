@@ -97,11 +97,11 @@ class BudgetAllocation(models.Model):
     activity = models.CharField(max_length = 200)
     agency = models.ForeignKey(Agency)
     allocation = models.ForeignKey(Allocation)
-    performane_indicator = models.CharField(max_length = 45)
-    q1 = models.DecimalField(max_digits = 12, decimal_places = 2)
-    q2 = models.DecimalField(max_digits = 12, decimal_places = 2)
-    q3 = models.DecimalField(max_digits = 12, decimal_places = 2)
-    q4 = models.DecimalField(max_digits = 12, decimal_places = 2)
+    performance_indicator = models.CharField(max_length = 45)
+    q1 = models.IntegerField()
+    q2 = models.IntegerField()
+    q3 = models.IntegerField()
+    q4 = models.IntegerField()
     jan = models.DecimalField(max_digits = 12, decimal_places = 2)
     feb = models.DecimalField(max_digits = 12, decimal_places = 2)
     mar = models.DecimalField(max_digits = 12, decimal_places = 2)
@@ -114,6 +114,7 @@ class BudgetAllocation(models.Model):
     oct = models.DecimalField(max_digits = 12, decimal_places = 2)
     nov = models.DecimalField(max_digits = 12, decimal_places = 2)
     dec = models.DecimalField(max_digits = 12, decimal_places = 2)
+    total = models.DecimalField(max_digits = 14, decimal_places = 2)
     
     def __unicode__(self):
         return self.activity
@@ -124,24 +125,19 @@ class BudgetAllocation(models.Model):
                        ('print_report', 'Print Agency WFP Information')
         )
 
-
-class AllotmentReleases(models.Model):
-    agency = models.ForeignKey(Agency)
-    month = models.CharField(max_length = 3, choices = MONTHS)
-    amount = models.DecimalField(max_digits = 12, decimal_places = 2)
-    allocation = models.ForeignKey(Allocation)
+class FundReleases(models.Model):
+    budgetallocation = models.ForeignKey(BudgetAllocation)
+    month = models.IntegerField(choices=MONTHS)
     date_release = models.DateTimeField()
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
 
-    def __unicode__(self):
-        self.amount
-        
     class Meta:
-        db_table = 'allotment_releases'
+        db_table = 'fund_releases'
 
 class Documents(models.Model):
     doc_name = models.CharField(max_length=100)
     
-    def __unicode__():
+    def __unicode__(self):
         return self.doc_name
 
     class Meta:

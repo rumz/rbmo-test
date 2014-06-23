@@ -13,4 +13,6 @@ urlpatterns = patterns('',
     url(r'^home$', home),
     url(r'^logout$', logout_user),
     url(r'^admin/', include('admin.urls')),
+    url(r'^agency/wfp/', include('wfp.urls')),
+    url(r'^agency/fund/', include('fund.urls')),
 )

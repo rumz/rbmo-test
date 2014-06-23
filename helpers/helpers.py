@@ -1,4 +1,6 @@
 from django.db import connection
+import time
+from datetime import datetime
 
 def has_permission(user_id, action, target):
     cursor = connection.cursor()
@@ -31,8 +33,10 @@ def get_allowed_tabs(user_id):
         reports.append({'tag': 'List of Agencies with Complete Documents', 'link': ''})
     tabs.append({'tag':'Reports', 'menus':reports})
     return tabs
+            
     
-    
-    
-        
-    
+def numify(num):
+    if num is None:
+        return 0
+    else:
+        return num

@@ -1,0 +1,20 @@
+.home-banner{
+    background-color: rgba(0, 204, 0, .3);
+    color: black;
+}
+
+tr.hover{
+    cursor: pointer;
+}
+
+th.decimal{
+    text-align: right;
+}
+
+td.decimal{
+    text-align: right;
+}
+
+tr.header-g{
+    background-color: rgba(145, 123, 154, 0.4);
+}

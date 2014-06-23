@@ -2,19 +2,10 @@
 
 {%block right-content%}
 <div class="col-sm-9">
-  <h2>{{page_title}}</h2>
+  <h2>Welcome {{user.get_full_name}}</h2>
   
   <div class="col-sm-9">
-    {%include "./admin/user_search_form.html"%}
-  </div>
-  <div class="col-sm-3">
-    <a href="/admin/add_edit_user" class="btn btn-default">
-      <span class="glyphicon glyphicon-plus-sign"></span>
-      Add User
-    </a>
-  </div>
-  <div class="col-sm-12 div">
-    {%include "./admin/users_table.html"%}
+
   </div>
 </div>
 {%endblock%}

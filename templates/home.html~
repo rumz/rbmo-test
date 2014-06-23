@@ -1,72 +1,58 @@
 {% extends "base.html" %}
 
+{% block css %}
+<link href="/static/css/rbmo.css" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <content>
   <div class="container">
-    <div class="jumbotron">
+    <div class="jumbotron home-banner" >
       <h2>Regional Budget Management Office</h2>
       <p>ARMM Compound Cotabato City</p>
       
     </div>
 
     <div class="col-sm-4">
+
       <div class="thumbnail">
 	<div class="media">
+	  <a class="pull-left" href="#">
+	    <img class="media-object" src="/dsd" width="1oopx">
+	  </a>
           <div class="media-body">
-            <h3 class="media-heading">Administration</h3>
-<!--            <p><b>Functions</b>
-	      <ul>
-		<li>Admin can add, delete and edit user type</li>
-		<li>Admin can specify user restriction or what the user is allowed or not allowed to do in</li>
-the system
-	      </ul>
-</p>-->
+            <h3 class="media-heading">RBMO Employee</h3>
             <p><a href="/admin" class="btn btn-primary" role="button">Login here</a></p>
           </div>
 	</div>
       </div>
-    </div>
 
-    <div class="col-sm-4">
       <div class="thumbnail">
 	<div class="media">
-          <div class="media-body">
-            <h3 class="media-heading">BEAM</h3>
-            <!--<p><b>Functions</b>
-	      <ul>
-		<li>Notice of Cash Allocation (Personnel Services, Maintenance and Other Operating</li>
-Expenses)
-	      <li>Letter of Transmittal to Agency</li>
-	      <li>Status of Fund per Agency</li>
-	      <li>Utilization Rate by each Agency</li>
-	      <li>Some parts of the Monitoring Report</li>
-	      <li>Graphs and Bars for Data analysis</li>
-	      </ul>
-</p>-->
-            <p><a href="/security/login" class="btn btn-primary" role="button">Login here</a></p>
-          </div>
-	</div>
-      </div>
-    </div>
-
-    <div class="col-sm-4">
-      <div class="thumbnail">
-	<div class="media">
-          
+	  <a class="pull-left" href="#">
+	    <img class="media-object" src="">
+	  </a>
           <div class="media-body">
             <h3 class="media-heading">Agency/Office</h3>
-           <!-- <p>
-	      <b>Functions</b>
-	      <ul>
-		<li>View Running Balances</li>
-	      </ul>
-	    </p>-->
-            <p><a href="/security/login" class="btn btn-primary" role="button">Login here</a></p>
+            <p><a href="/admin" class="btn btn-primary" role="button">Login here</a></p>
           </div>
 	</div>
       </div>
+
     </div>
 
+    <!--right panel-->
+
+    <div class="col-sm-8">
+      <div class="panel panel-default" style="min-height:300px">
+	<div class="panel-heading">
+	  <strong>Activities</strong>
+	</div>
+	<div class="panel-body">
+	  
+	</div>
+      </panel>
+    </div>
 
   </div>
 </content>

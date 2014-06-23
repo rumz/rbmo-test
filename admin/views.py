@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
 from helpers.helpers import has_permission, get_allowed_tabs
 from datetime import datetime
+import time
 
 
 # Create your views here.
@@ -44,6 +45,8 @@ def home(request):
             'system_name': SYSTEM_NAME
         }
     data['allowed_tabs'] = get_allowed_tabs(request.user.id)
+    data['year'] = time.strftime('%Y')
+    data['agency_req_stats'] = reqsStats(time.strftime('%Y'))
     return render_to_response('./admin/home.html', data, context)
 
 def users(request):
@@ -224,13 +227,14 @@ def saveSubmitReqs(request):
             doc_submit.save()
         return HttpResponseRedirect('/admin/manage_agency_docs?agency_id='+str(agency.id))
 
+
+@login_required(login_url='/admin/')
 def delSubmitReqs(request):
     docs_sub_id = request.GET.get('doc_sub')
     doc_sub = DocsSubmitted.objects.get(id=docs_sub_id)
     agency_id = doc_sub.agency.id
     doc_sub.delete()
     return HttpResponseRedirect('/admin/manage_agency_docs?agency_id='+str(agency_id))
-
 
 @transaction.atomic
 def addAgency(agency_frm):
@@ -241,43 +245,18 @@ def addAgency(agency_frm):
     agency.save()
 
 
+def reqsStats(year):
+    cursor = connection.cursor()
+    stats_list = []
+    req_stats_query = '''
+    select agency.name, 
+    (select count(*) from documents)-(select count(*) from docs_submitted where agency_id=agency.id and extract(year from date_submitted)=%s)
+    from agency
+    '''
+    cursor.execute(req_stats_query, [year])
+    for agency in cursor.fetchall():
+        stats_list.append({'agency_name': agency[0], 'stat': agency[1]})
+    return stats_list
 
 
-            
-"""
-def userGroups(request):
-    context = RequestContext(request)
-    data = {'page': 'groups',
-            'page_title': 'User Groups',
-            'system_name': SYSTEM_NAME
-        }
-    groups = Group.objects.all()
-    data['groups'] = groups    
-    return render_to_response('./admin/user_groups_main.html', data, context)
 
-
-def addEditUserGroup(request):
-    context = RequestContext(request)
-    data = {'permissions': Permission.objects.all(),
-            'page' : 'groups',
-            'system_name': SYSTEM_NAME,
-            'form': GroupForm(),
-            'page_title': 'Add User Group and its Permissions',
-            'action' : request.POST.get('action', 'add')
-    }
-    if request.method=='POST':
-        grp_frm = GroupForm(request.POST)
-        if grp_frm.is_valid() and data['action']=='add':
-            group = Group(name = grp_frm.cleaned_data['name'])
-            group.save()
-            for perm in request.POST.getlist('perms[]'):
-                perm_obj = Permission(id=perm)
-                group.permissions.add(perm_obj)
-            data['s_msg'] = "New User Group Successfully saved"
-            return render_to_response('./admin/user_group_form.html', data, context)
-        else:
-            
-            return render_to_response('./admin/user_group_form.html', data, context)            
-    else:
-        return render_to_response('./admin/user_group_form.html', data, context)
-"""

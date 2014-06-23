@@ -22,7 +22,7 @@
          <ul style="list-style-type: none">
          {% for doc in submitted_docs %}
 	    {% if doc.date_submitted %}
-             <li><span class="glyphicon glyphicon-check text-success"></span>&nbsp;{{doc.doc_name}} &nbsp; <i><span style="font-weight:.35">Submitted on {{doc.date_submitted}}</span></i></li>
+             <li><span class="glyphicon glyphicon-check text-success"></span>&nbsp;<b>{{doc.doc_name}}</b> &nbsp; <i><span style="font-weight:.30">Submitted on {{doc.date_submitted}}</span></i></li>
 	     {% else %}
 	     <li><span class="glyphicon glyphicon-unchecked text-danger"></span>&nbsp;{{doc.doc_name}}</li>
 	     {% endif %}

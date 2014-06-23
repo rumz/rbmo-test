@@ -4,11 +4,12 @@ from django.http import  HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from django.conf.urls.static import static
 from .forms import (UserForm, LoginForm, AgencyForm)
-from rbmo.models import UserGroup, Groups, Agency, Documents
+from rbmo.models import UserGroup, Groups, Agency, Documents, DocsSubmitted
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
 from helpers.helpers import has_permission, get_allowed_tabs
+from datetime import datetime
 
 
 # Create your views here.
@@ -209,6 +210,28 @@ def manageAgencyDocs(request):
         return render_to_response('./admin/agency_docs_recording.html', data, context)  
 
 
+@transaction.atomic
+def saveSubmitReqs(request):
+    context = RequestContext(request)
+    
+    if request.method == 'POST':
+        print 'recording'
+        agency = Agency.objects.get(id=request.POST.get('agency_id'))
+        today = datetime.now()
+        for doc in request.POST.getlist('docs[]'):
+            document = Documents.objects.get(id=doc)
+            doc_submit = DocsSubmitted(agency=agency, doc=document, date_submitted=today.strftime('%Y-%m-%d %I:%M'))
+            doc_submit.save()
+        return HttpResponseRedirect('/admin/manage_agency_docs?agency_id='+str(agency.id))
+
+
+@login_required(login_url='/admin/')
+def delSubmitReqs(request):
+    docs_sub_id = request.GET.get('doc_sub')
+    doc_sub = DocsSubmitted.objects.get(id=docs_sub_id)
+    agency_id = doc_sub.agency.id
+    doc_sub.delete()
+    return HttpResponseRedirect('/admin/manage_agency_docs?agency_id='+str(agency_id))
 
 @transaction.atomic
 def addAgency(agency_frm):
