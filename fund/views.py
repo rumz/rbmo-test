@@ -5,7 +5,7 @@ from django.http import  HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from django.conf.urls.static import static
 from .forms import (FundRequestForm)
-from rbmo.models import BudgetAllocation, Agency, FundReleases
+from rbmo.models import BudgetAllocation, Agency
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required

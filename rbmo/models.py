@@ -28,7 +28,7 @@ class Groups(models.Model):
 
 class GroupPermissions(models.Model):
     group = models.ForeignKey(Groups)
-    permisssion = models.ForeignKey(Permissions)
+    permission = models.ForeignKey(Permissions)
 
     def __unicode__(self):
         return self.group+' '+self.permission
@@ -125,35 +125,91 @@ class BudgetAllocation(models.Model):
                        ('print_report', 'Print Agency WFP Information')
         )
 
-class FundReleases(models.Model):
+class FundRelUtil(models.Model):
     budgetallocation = models.ForeignKey(BudgetAllocation)
     month = models.IntegerField(choices=MONTHS)
     date_release = models.DateTimeField()
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    amount_rel = models.DecimalField(max_digits=12, decimal_places=2)
+    amount_util = models.DecimalField(max_digits=12, decimal_places=2)
 
     class Meta:
-        db_table = 'fund_releases'
+        db_table = 'fund_rel_util'
 
-class Documents(models.Model):
-    doc_name = models.CharField(max_length=100)
+
+class MPFR(models.Model):
+    year = models.IntegerField()
+    agency = models.ForeignKey(Agency)
+    jan = models.DateTimeField(null=True)
+    feb = models.DateTimeField(null=True)
+    mar = models.DateTimeField(null=True)
+    apr = models.DateTimeField(null=True)
+    may = models.DateTimeField(null=True)
+    jun = models.DateTimeField(null=True)
+    jul = models.DateTimeField(null=True)
+    aug = models.DateTimeField(null=True)
+    sept = models.DateTimeField(null=True)
+    oct = models.DateTimeField(null=True)
+    nov = models.DateTimeField(null=True)
+    dec = models.DateTimeField(null=True)
+
+    def __unicode__(self):
+        return self.agency.name
+
+    class Meta:
+        db_table = 'mpfr'
+
+class Requirements(models.Model):
+    SUBMISSION_OPTIONS = (('M', 'Monthly' ), ('Q', 'Quarterly'), ('S', 'Semi Annual'), ('Y', 'Yearly'))
+    name = models.CharField(max_length=75)
+    subs_opt = models.CharField(max_length = 1, choices = SUBMISSION_OPTIONS)
+    requirement_for = models.CharField(max_length=5)
+
+    def __unicode__(self):
+        return self.name
+        
+    class Meta:
+        db_table = 'requirements'
+
+
+
+class MonthlySubmitted(models.Model):
+    year = models.IntegerField()
+    date_submitted = models.DateTimeField()
+    month = models.IntegerField()
+    agency = models.ForeignKey(Agency)
+    requirement = models.ForeignKey(Requirements)
     
     def __unicode__(self):
-        return self.doc_name
+        return self.requirement.name
 
     class Meta:
-        db_table = 'documents'
+        db_table = 'monthly_submitted'
         
-
-class DocsSubmitted(models.Model):
+    
+class QuarterSubmitted(models.Model):
     date_submitted = models.DateTimeField()
+    quarter = models.IntegerField()
     agency = models.ForeignKey(Agency)
-    doc = models.ForeignKey(Documents)
+    requirement = models.ForeignKey(Requirements)
 
     def __unicode__(self):
-        return self.doc.doc_name
-        
-    class Meta:
-        db_table = 'docs_submitted'
+        return self.requirement.name
 
+    class Meta:
+        db_table = 'quarterly_submitted'
+     
+
+
+class YearlySubmitted(models.Model):
+    date_submitted = models.DateTimeField()
+    year = models.IntegerField()
+    agency = models.ForeignKey(Agency)
+    requirement = models.ForeignKey(Requirements)
+
+    def __unicode__(self):
+        return self.requirement.name
+
+    class Meta:
+        db_table = 'yearly_submitted'
 
 

@@ -60,8 +60,27 @@ TEMPLATE_DIRS = (TEMPLATE_PATH.replace('\\','/'),)
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
+#mysql settings 
 DATABASES = {
     'default': {
+        
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'rbmo',                      # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': 'root',
+        #'PASSWORD': 'DEVELOPERS',
+        'PASSWORD': 'byrenx',
+        'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '3306',                      # Set to empty string for default.
+    }
+}
+
+
+#postgre sql settings
+'''
+DATABASES = {
+    'default': {
+        
         'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'rbmo',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
@@ -72,6 +91,7 @@ DATABASES = {
         'PORT': '5432',                      # Set to empty string for default.
     }
 }
+'''
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

@@ -4,7 +4,7 @@ from django.http import  HttpResponseRedirect, HttpResponse
 from django.conf import settings
 from django.conf.urls.static import static
 from .forms import (UserForm, LoginForm, AgencyForm)
-from rbmo.models import UserGroup, Groups, Agency, Documents, DocsSubmitted
+from rbmo.models import UserGroup, Groups, Agency, MPFR
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
@@ -46,7 +46,7 @@ def home(request):
         }
     data['allowed_tabs'] = get_allowed_tabs(request.user.id)
     data['year'] = time.strftime('%Y')
-    data['agency_req_stats'] = reqsStats(time.strftime('%Y'))
+    #data['agency_req_stats'] = reqsStats(time.strftime('%Y'))
     return render_to_response('./admin/home.html', data, context)
 
 def users(request):
@@ -164,10 +164,11 @@ def agencyMainPage(request):
     data['allowed_tabs'] = get_allowed_tabs(request.user.id)
     try:
         agency = Agency.objects.get(id=data['agency_id'])
+        """
         docs_subs = Documents.objects.raw('''select * from documents docs
         left join docs_submitted sub_docs on
         docs.id = sub_docs.doc_id and sub_docs.agency_id = %s
-        and extract(year from date_submitted) = %s''', [agency.id, 2014])
+        and extract(year from date_submitted) = %s''', [synergy.id, 2014])
 
         cursor.execute("select count(*) as count from docs_submitted where agency_id=%s AND extract(year from date_submitted)=%s", 
                                          [agency.id, 2014]) 
@@ -177,9 +178,10 @@ def agencyMainPage(request):
             data['remarks'] = 'PENDING'
         else:
             data['remarks'] = 'PROCESSED'
-                
+
+        data['submitted_docs'] = docs_subs                
+        """
         data['agency'] = agency
-        data['submitted_docs'] = docs_subs
         return render_to_response('./admin/agency_main_page.html', data, context)
     except Agency.DoesNotExist:
         return render_to_response('./admin/agency_main_page.html', data, context)
@@ -193,25 +195,64 @@ def manageAgencyDocs(request):
     }
     data['allowed_tabs'] = get_allowed_tabs(request.user.id)
     try:
+        #get the agency
         agency = Agency.objects.get(id=data['agency_id'])
         data['agency'] = agency
-        docs_unsubmitted = Documents.objects.raw('''
-        SELECT * FROM documents
-        WHERE id not in (SELECT doc_id from docs_submitted where agency_id =%s and extract(year from date_submitted)=%s)''',[agency.id, 2014])
-
-        docs_submitted = Documents.objects.raw('''
-        select * from documents
-        inner join docs_submitted on 
-        documents.id = docs_submitted.doc_id and docs_submitted.agency_id=%s
-        and extract(year from docs_submitted.date_submitted)=%s
-        ''', [agency.id, 2014])
-
-        data['docs_unsubmitted'] = docs_unsubmitted
-        data['docs_submitted'] = docs_submitted
+        #year
+        data['year'] = time.strftime('%Y')            
+        data['monthly'] = getAgencyMonthlyReq(data['year'], agency)
         return render_to_response('./admin/agency_docs_recording.html', data, context)
     except Agency.DoesNotExist:
         return render_to_response('./admin/agency_docs_recording.html', data, context)  
 
+@login_required(login_url='/admin/')
+def submitMPFR(request):
+    agency_id = request.POST.get('agency_id')
+    year = request.POST.get('year')
+    agency = Agency.objects.get(id=agency_id)
+    #monthly physical and financial report
+    monthlyReq = MPFR.objects.get(year=year, agency=agency)
+    months = request.POST.getlist('month[]')
+    for month in months:
+        if month == '1':
+            monthlyReq.jan = datetime.now()
+        elif month == '2':
+            monthlyReq.feb = datetime.now()
+        elif month == '3':
+            monthlyReq.mar = datetime.now()
+        elif month == '4':
+            monthlyReq.apr = datetime.now()
+        elif month == '5':
+            monthlyReq.may = datetime.now()
+        elif month == '6':
+            monthlyReq.jun = datetime.now()
+        elif month == '7':
+            monthlyReq.jul = datetime.now()
+        elif month == '8':
+            monthlyReq.aug = datetime.now()
+        elif month == '9':
+            monthlyReq.sept = datetime.now()
+        elif month == '10':
+            monthlyReq.oct = datetime.now()
+        elif month == '11':
+            monthlyReq.nov = datetime.now()
+        else:
+            monthlyReq.dec = datetime.now()
+        monthlyReq.save()
+    return HttpResponseRedirect('/admin/manage_agency_docs?agency_id='+str(agency.id))
+
+
+
+
+
+def getAgencyMonthlyReq(year, agency):
+    try:
+        mpfr = MPFR.objects.get(year=year, agency=agency)
+        return mpfr
+    except MPFR.DoesNotExist:
+        mpfr = MPFR(year=year, agency=agency)
+        mpfr.save()
+        return mpfr
 
 @transaction.atomic
 def saveSubmitReqs(request):

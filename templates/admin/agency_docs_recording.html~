@@ -8,19 +8,24 @@
 <div class="col-sm-9">
   <h2>{{agency.name}}</h2>
   <p>{{agency.email}}</p>
+  <ul class="nav nav-tabs">
+    <li><a href="#"> Monthly Requirements </a></li>
+    <li><a href="#"> Quarterly Requirements </a></li>
+  </ul>
   <div class="col-sm-6">
     <div class="panel panel-default">
       <div class="panel-heading">
 	<b>Unsubmitted Requirements</b>
       </div>
       <div class="panel-body">
-	<form action="" method="POST">{%csrf_token%}
+	<form action="/admin/submit_requirements" method="POST">{%csrf_token%}
 	  <p><b>Instruction: </b> Check the requirements being submitted by the agency/office</p>
+	  <input type="hidden" name="agency_id" value="{{agency.id}}">
 	  <ul style="list-style-type: none">
 	    {% if docs_unsubmitted %}
 	       {% for doc in docs_unsubmitted %}
 	         <li>
-		   <input type="checkbox" name="docs" value="{{doc.id}}">
+		   <input type="checkbox" name="docs[]" value="{{doc.id}}">
 		   &nbsp; {{doc.doc_name}}
 		 </li>
 	       {% endfor %}
@@ -48,7 +53,7 @@
 	  <ul style="list-style-type:none">
 	  {% for doc in docs_submitted %}
 	     <li>
-	       <a href="">
+	       <a href="/admin/delete_requirement?doc_sub={{doc.id}}">
 		 <span class="glyphicon glyphicon-remove text-danger"></span>&nbsp;
 	       </a>
 	       {{doc.doc_name}}

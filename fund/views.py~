@@ -151,6 +151,36 @@ def getAllocatedBudget(request):
 
     return HttpResponse(response)
     
+@login_required(login_url='/admin/')
+def viewFundStatDetails(request):
+    cursor = connection.cursor()
+    context = RequestContext(request)
+    data = {'agency_id' : request.GET.get('agency_id'),
+            'year'      : request.GET.get('year', time.strftime('%Y')),
+            'allocation': request.GET.get('allocation', 'PS')
+    }
 
-
+    releases_query ='''
+    select fr.date_release, ba.activity ,fr.amount
+    from fund_releases fr inner join budget_allocation ba on 
+    fr.budgetallocation_id=ba.id and ba.agency_id=%s and ba.year=%s
+    inner join allocation a on
+    ba.allocation_id=a.id and a.name=%s
+    '''
     
+    agency = Agency.objects.get(id = data['agency_id'])
+    total_ps = BudgetAllocation.objects.filter(agency = agency, year = data['year'], allocation__name = data['allocation']).aggregate(Sum('total'))
+    data['total'] = numify(total_ps['total__sum'])
+    temp_total = data['total']
+    details = []
+    cursor.execute(releases_query, [data['agency_id'], data['year'], data['allocation']])
+    for release in cursor.fetchall():
+        temp_total = temp_total-release[2]
+        details.append({'release_date'   : release[0],
+                        'activity'       : release[1],
+                        'release_amount' : release[2],
+                        'balance'        : temp_total
+                    })
+    data['fund_stat_details'] = details
+        
+    return render_to_response('./fund/fund_stat_details.html', data, context)

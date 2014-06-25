@@ -8,7 +8,7 @@
 <div class="col-sm-9">
   <h2>{{agency.name}}</h2>
   <hr/>
-  <div class="col-sm-12" style="background-color:rgba(204,204,204,.4)">
+  <div class="col-sm-12">
     <h3>{{year}}&nbsp;Work and Financial Plan Information</h3>
     <div class="col-sm-6">
       {% if current_year == year %}
@@ -39,45 +39,53 @@
     <div class="col-sm-6">
       <!---PS--->
       {% if pss %}
-         <h4>Personnel Services</h4>
-	 <table class="table">
-	   <thead>
-	     <tr>
-	       <th>Program/Activity</th>
-	       <th>Performance Indicator</th>
-	     </tr>
-	   </thead>
-	   <tbody>
-	   {% for ps in pss %}
-	   <tr onclick="getWFPData({{ps.id}})" 
-	      onmouseover="$(this).addClass('warning')" onmouseout="$(this).removeClass()" style="cursor: pointer">
-	     <td>{{ps.activity}}</td>
-	     <td>{{ps.performance_indicator}}</td>
-	   </tr>
-	   {% endfor %}
-	   </tbody>
-	 </table>
+         <div class="panel panel-default">
+	   <div class="panel-heading">
+	     <h3>Personnel Services</h3>
+	   </div>
+	   <table class="table">
+	     <thead>
+	       <tr>
+		 <th>Program/Activity</th>
+		 <th>Performance Indicator</th>
+	       </tr>
+	     </thead>
+	     <tbody>
+	       {% for ps in pss %}
+	       <tr onclick="getWFPData({{ps.id}});" 
+		   onmouseover="$(this).addClass('info')" onmouseout="$(this).removeClass()" style="cursor: pointer">
+		 <td>{{ps.activity}}</td>
+		 <td>{{ps.performance_indicator}}</td>
+	       </tr>
+	       {% endfor %}
+	     </tbody>
+	   </table>
+	 </div>
       {% endif %}
       {% if mooes %}
-	 <h4>Maintenance and Operating Expenses</h4>
-	 <table class="table">
-	   <thead>
-	     <tr>
-	       <th>Program/Activity</th>
-	       <th>Performance Indicator</th>
-	     </tr>
-	   </thead>
-	   <tbody>
-	     {% for mooe in mooes %}
-	     <tr onclick="getWFPData({{mooe.id}})" 
-		 onmouseover="$(this).addClass('warning')" onmouseout="$(this).removeClass()" style="cursor: pointer">
-	       <td>{{mooe.activity}}</td>
-	       <td>{{mooe.performance_indicator}}</td>
-	     </tr>
-	     {% endfor %}
-	   </tbody>
-	 </table>
-       {% endif %}
+	 <div class="panel panel-default">
+	   <div class="panel-heading">
+	     <h3>Maintenance and Operating Expenses</h3>
+	   </div>
+	   <table class="table">
+	     <thead>
+	       <tr>
+		 <th>Program/Activity</th>
+		 <th>Performance Indicator</th>
+	       </tr>
+	     </thead>
+	     <tbody>
+	       {% for mooe in mooes %}
+	       <tr onclick="getWFPData({{mooe.id}})" 
+		   onmouseover="$(this).addClass('info')" onmouseout="$(this).removeClass()" style="cursor: pointer">
+		 <td>{{mooe.activity}}</td>
+		 <td>{{mooe.performance_indicator}}</td>
+	       </tr>
+	       {% endfor %}
+	     </tbody>
+	   </table>
+	   {% endif %}
+	 </div>
     </div>
     <!-- wfp row details -->
     <div class="col-sm-6" id="wfp_detail">

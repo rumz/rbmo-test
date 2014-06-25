@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^pm_agency$', addEditAgency),
     url(r'^agency$', agencyMainPage),
     url(r'^manage_agency_docs$',  manageAgencyDocs),
+    url(r'^submit_monthly_mpfr$',  submitMPFR),
     url(r'^submit_requirements', saveSubmitReqs),
     url(r'^delete_requirement', delSubmitReqs),
 )

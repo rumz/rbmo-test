@@ -14,5 +14,4 @@ urlpatterns = patterns('',
     url(r'^manage_agency_docs$',  manageAgencyDocs),
     url(r'^submit_requirements', saveSubmitReqs),
     url(r'^delete_requirement', delSubmitReqs),
-    url(r'^wfp_form', wfpForm),
 )
