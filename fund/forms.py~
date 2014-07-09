@@ -1,5 +1,5 @@
 from django import forms
-from rbmo.models  import BudgetAllocation, FundReleases
+from rbmo.models  import Allocation
 from django.contrib.auth.models import User
 
 
@@ -18,6 +18,4 @@ class FundRequestForm(forms.Form):
                'required': 'True'
         }
     ))
-    class Meta:
-        model = FundReleases
-        fields= ['amount', 'month']
+

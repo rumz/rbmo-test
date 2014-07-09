@@ -8,7 +8,7 @@ class UserForm(forms.ModelForm):
                                widget = forms.TextInput(attrs={
                                    'class' : 'form-control',
                                    'placeholder': 'Use your email as your Username',
-                                   'requred': 'True'
+                                   'required': 'True'
                                })
                            )
 
@@ -28,6 +28,12 @@ class UserForm(forms.ModelForm):
                                })
     )
 
+    group = forms.ModelChoiceField(queryset = Groups.objects.all(),
+                               widget = forms.Select(attrs={
+                                   'class': 'form-control'
+                               })
+    )
+
     class Meta:
         model = User
         fields = ['email', 'first_name', 'last_name']
@@ -43,8 +49,35 @@ class LoginForm(forms.ModelForm):
         }
     
 
+class AgencyForm(forms.ModelForm):
+
+    name = forms.CharField(widget=forms.TextInput(attrs={
+        'class' : 'form-control',
+        'required': 'True',
+        'placeholder' : 'Type the Name of Agency here..'
+    }))
+
+    email = forms.EmailField(max_length=75,
+                             widget = forms.TextInput(attrs={
+                                 'class' : 'form-control',
+                                 'required': 'True',
+                                 'placeholder': 'Type a valid email here..'
+                             })
+                         )
+    
+    sector = forms.ModelChoiceField(queryset = Sector.objects.all(),
+                                   widget = forms.Select(attrs = {
+                                       'class' : 'form-control'
+                                   })
+    )
+
+    class Meta:
+        model = Agency
+        fields = ['name', 'email', 'sector']
+
+
 class GroupForm(forms.Form):
-    name = forms.CharField(max_length=100,
+    name = forms.CharField(max_length=75,
                            widget = forms.TextInput(attrs={
                                'class' : 'form-control',
                                'required': 'True'

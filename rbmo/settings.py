@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'rbmo',
 )
 
@@ -61,6 +62,7 @@ TEMPLATE_DIRS = (TEMPLATE_PATH.replace('\\','/'),)
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 #mysql settings 
+'''
 DATABASES = {
     'default': {
         
@@ -74,10 +76,10 @@ DATABASES = {
         'PORT': '3306',                      # Set to empty string for default.
     }
 }
+'''
 
 
 #postgre sql settings
-'''
 DATABASES = {
     'default': {
         
@@ -86,12 +88,11 @@ DATABASES = {
         # The following settings are not used with sqlite3:
         'USER': 'postgres',
         #'PASSWORD': 'DEVELOPERS',
-        'PASSWORD': 'byrenx',
+        'PASSWORD': '1',
         'HOST': 'localhost',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '5432',                      # Set to empty string for default.
     }
 }
-'''
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

@@ -7,7 +7,8 @@
   </thead>
   <tbody>
     {%for agency in agencies%}
-    <tr onmouseover="$(this).addClass('warning')" onmouseout="$(this).removeClass()" style="cursor: pointer">
+    <tr onclick="window.location = '/admin/agency?agency_id={{agency.id}}'"
+       onmouseover="$(this).addClass('warning')" onmouseout="$(this).removeClass()" style="cursor: pointer">
       <td>{{agency.name}}</td>
       <td>{{agency.email}}</td>
       <td>{{agency.sector.name}}</td>

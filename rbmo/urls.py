@@ -15,4 +15,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include('admin.urls')),
     url(r'^agency/wfp/', include('wfp.urls')),
     url(r'^agency/fund/', include('fund.urls')),
+    url(r'^agency/', include('agency.urls')),
 )

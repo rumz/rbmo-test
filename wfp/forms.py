@@ -1,5 +1,5 @@
 from django import forms
-from rbmo.models  import BudgetAllocation, Allocation
+from rbmo.models  import WFPData, CoRequest
 
 class WFPForm(forms.ModelForm):
     activity = forms.CharField(widget=forms.TextInput(attrs={
@@ -7,85 +7,88 @@ class WFPForm(forms.ModelForm):
         'required' : 'True'
     }))
 
-    allocation = forms.ModelChoiceField(queryset=Allocation.objects.all(),
-                                   widget=forms.Select(attrs={
-                                       'class' : 'form-control'
-                                   })
-    )
-
-    performance_indicator = forms.CharField(widget=forms.TextInput(attrs={
-        'class' : 'form-control',
-        'required' : 'True'
-    }))
-
-    q1 = forms.IntegerField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
-    }))
-
-    q2 = forms.IntegerField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
-    }))
-
-    q3 = forms.IntegerField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
-    }))
-
-    q4 = forms.IntegerField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
-    }))
-
     jan = forms.DecimalField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
+        'class' : 'form-control',
+        'value' : '0'
     }))
 
     feb = forms.DecimalField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
+        'class' : 'form-control',
+        'value' : '0'
     }))
 
     mar = forms.DecimalField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
+        'class' : 'form-control',
+        'value' : '0'
     }))
 
     apr = forms.DecimalField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
+        'class' : 'form-control',
+        'value' : '0'
     }))
 
     may = forms.DecimalField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
+        'class' : 'form-control',
+        'value' : '0'
     }))
 
     jun = forms.DecimalField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
+        'class' : 'form-control',
+        'value' : '0'
     }))
 
     jul = forms.DecimalField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
+        'class' : 'form-control',
+        'value' : '0'
     }))
 
     aug = forms.DecimalField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
+        'class' : 'form-control',
+        'value' : '0'
     }))
 
     sept = forms.DecimalField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
+        'class' : 'form-control',
+        'value' : '0'
     }))
 
     oct = forms.DecimalField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
+        'class' : 'form-control',
+        'value' : '0'
     }))
 
     nov = forms.DecimalField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
+        'class' : 'form-control',
+        'value' : '0'
     }))
 
     dec = forms.DecimalField(widget=forms.NumberInput(attrs={
-        'class' : 'form-control'
+        'class' : 'form-control',
+        'value' : '0'
     }))
 
 
-
     class Meta:
-        model = BudgetAllocation
-        fields = ['activity', 'allocation', 'performance_indicator', 'q1', 
-                  'q2', 'q3', 'q4', 'jan', 'feb', 'mar', 'apr', 'may', 'jun',
+        model = WFPData
+        fields = ['activity', 'jan', 'feb', 'mar', 'apr', 'may', 'jun',
                   'jul', 'aug', 'sept', 'oct', 'nov', 'dec']
+
+
+class CORequestForm(forms.ModelForm):
+    class Meta:
+        model = CoRequest
+        fields = ['subject', 'action', 'status']
+        widgets = {
+            'subject' : forms.TextInput(attrs={
+                'class'    : 'form-control',
+                'required' : 'True'
+            }),
+            'action'  : forms.TextInput(attrs={
+                'class'    : 'form-control',
+                'required' : 'True'
+            }),
+            'status'  : forms.TextInput(attrs={
+                'class'    : 'form-control',
+                'required' : 'True'
+            })
+        }

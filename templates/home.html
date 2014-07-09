@@ -6,41 +6,49 @@
 
 {% block content %}
 <content>
-  <div class="container">
-    <div class="jumbotron home-banner" >
-      <h2>Regional Budget Management Office</h2>
-      <p>ARMM Compound Cotabato City</p>
+  <div class="jumbotron" style="padding-bottom: 10px">
+    <div class="container">
+ <img width="100%" src="/static/images/rbmo_banner3.png"> 
     </div>
-
-    <div class="col-sm-3" style="border:1px solid;border-color: rgba(230, 230,230, .6)">
-      <h4>LOGIN AS</h4>
-      <ul class="nav nav-pills nav-stacked">
-	<li>
-	  <a href="/admin"><span class="glyphicon glyphicon-user"></span>&nbsp;
-	    RBMO Employee
-	  </a>
-	</li>
-	<li>
-	  <a href=""><span class="glyphicon glyphicon-home"></span>&nbsp;
-	    Agency/Office
-	  </a>
-	</li>
-      </ul>
-    </div>
-
-    <!--right panel-->
-
-    <div class="col-sm-9">
-      <div class="panel panel-default" style="min-height:300px">
-	<div class="panel-heading">
-	  <strong>Activities</strong>
-	</div>
-	<div class="panel-body">
-	  
-	</div>
-      </panel>
-    </div>
-
   </div>
+  <div class="row">
+  <div class="container" style="min-height: 336px">
+
+  <div class="col-md-6">
+    <div class="thumbnail">
+      <div class="media">
+      	<a class="pull-left" href="/admin">
+	  <img class="media-object" src="/static/images/lock-icon.png" alt="..." width="100px"/>
+	</a>
+	<div class="media-body">
+	  <h3 class="media-heading"> RBMO Employee </h3>
+	  <p> Log in as Employee to use the RBMO System. </p>
+	  <p><a href="/admin" class="btn btn-primary" role="button"> Login here</a></p>
+	</div>
+      </div>
+    </div>
+    </div>
+    <div class="col-md-6">
+      <div class="thumbnail">
+	<div class="media">
+	  <a class="pull-left" href="/agency/login">
+	    <img class="media-object" src="/static/images/Client.png" alt="..." width="100px">
+	  </a>
+  <div class="media-body">
+	    <h3 class="media-heading"> Agency/Office </h3> 
+	    <p> Log in as ....</p>
+	    <p><a href="/agency/login" class="btn btn-primary" role="button">Login here</a></p>
+	  </div>
+	</div>
+      </div>
+    </div>
+   </div>
+    <!--right panel-->
+<!---
+    <div class="col-sm-9 panel panel-default">
+      <h3>Activities</h3>
+      <hr/>
+    </div>
+---->
 </content>
 {% endblock %}

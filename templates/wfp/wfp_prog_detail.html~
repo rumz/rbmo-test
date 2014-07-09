@@ -1,0 +1,80 @@
+<h3>{{wfp.activity}}</h3>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <b>Physical Performance Target</b>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+	<th>Quarter</th>
+	<th>Target</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+	<td>1st Quarter</td><td>{{wfp.q1}}</td>
+      </tr>
+      <tr>
+	<td>2nd Quarter</td><td>{{wfp.q2}}</td>
+      </tr>
+      <tr>
+	<td>3rd Quarter</td><td>{{wfp.q3}}</td>
+      </tr>
+      <tr>
+	<td>4th Quarter</td><td>{{wfp.q4}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <b>Monthly Financial Performance Target</b>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+	<th>Month</th>
+	<th>Target</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+	<td>January</td><td>{{wfp.jan}}</td>
+      </tr>
+      <tr>
+	<td>February</td><td>{{wfp.feb}}</td>
+      </tr>
+      <tr>
+	<td>March</td><td>{{wfp.mar}}</td>
+      </tr>
+      <tr>
+	<td>April</td><td>{{wfp.apr}}</td>
+      </tr>
+      <tr>
+	<td>May</td><td>{{wfp.apr}}</td>
+      </tr>
+      <tr>
+	<td>June</td><td>{{wfp.jun}}</td>
+      </tr>
+      <tr>
+	<td>July</td><td>{{wfp.jul}}</td>
+      </tr>
+      <tr>
+	<td>August</td><td>{{wfp.aug}}</td>
+      </tr>
+      <tr>
+	<td>September</td><td>{{wfp.sept}}</td>
+      </tr>
+      <tr>
+	<td>October</td><td>{{wfp.oct}}</td>
+      </tr>
+      <tr>
+	<td>November</td><td>{{wfp.nov}}</td>
+      </tr>
+      <tr>
+	<td>December</td><td>{{wfp.dec}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

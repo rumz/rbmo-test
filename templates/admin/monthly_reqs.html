@@ -1,8 +1,5 @@
 <h3>Monthly Requirements Submission for {{year}}</h3>
 <div class="panel panel-default">
-  <div class="panel-heading">
-    Submit Requirements
-  </div>
   <div class="panel-body">
     <p>
       <strong>Instruction:</strong>
@@ -13,75 +10,95 @@
       <input type="hidden" name="year" value="{{year}}">
       <input type="hidden" name="agency_id" value="{{agency.id}}">
 	<table class="table">
-	  <thead>
-	    <tr>
-	      <th>Jan.</th>
-	      <th>Feb.</th>
-	      <th>Mar.</th>
-	      <th>Apr.</th>
-	      <th>May.</th>
-	      <th>Jun.</th>
-	      <th>Jul.</th>
-	      <th>Aug.</th>
-	      <th>Sept.</th>
-	      <th>OCt.</th>
-	      <th>Nov.</th>
-	      <th>Dec.</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <tr>
-	      <td>{%if monthly.jan %} <span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span> 
-		  {%else%}<input type="checkbox" name="month[]" value="1"/>
-		  {%endif%}
-	      </td>
-	      <td>{%if monthly.feb %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span> 
-		  {%else%}<input type="checkbox" name="month[]" value="2"/>
-                  {%endif%}
-	      </td>
-	      <td>{%if monthly.mar %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span> 
-		  {%else%}<input type="checkbox" name="month[]" value="3"/>
-		  {%endif%}
-	      </td>
-	      <td>{%if monthly.apr %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span> 
-                  {%else%}<input type="checkbox" name="month[]" value="4"/>
-		  {%endif%}
-	      </td>
-	      <td>{%if monthly.may %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span> 
-		  {%else%}<input type="checkbox" name="month[]" value="5"/>
-                  {%endif%}
-	      </td>
-	      <td>{%if monthly.jun %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span> 
-		  {%else%} <input type="checkbox" name="month[]" value="6"/>
-		  {%endif%}
-	      </td>
-	      <td>{%if monthly.jul %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span> 
-		  {%else%} <input type="checkbox" name="month[]" value="7"/>
-		  {%endif%}
-	      </td>
-	      <td>{%if monthly.aug %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>
-		  {%else%}<input type="checkbox" name="month[]" value="8"/>
-		  {%endif%}
-	      </td>
-	      <td>{%if monthly.sept %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>
-		  {%else%}<input type="checkbox" name="month[]" value="9"/>
-		  {%endif%}
-	      </td>
-	      <td>{%if monthly.oct %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span> 
-		  {%else%}<input type="checkbox" name="month[]" value="10"/>
-		  {%endif%}
-	      </td>
-	      <td>{%if monthly.nov %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span> 
-		  {%else%}<input type="checkbox" name="month[]" value="11"/>
-		  {%endif%}</td>
-	      <td>{%if monthly.dec %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span> 
-		  {%else%}<input type="checkbox" name="month[]" value="12"/>
-		  {%endif%}</td>
-	    </tr>
-	  </tbody>
-	</table>
-	<div class="panel-footer">
-	  <button class="btn btn-primary">Save</button>
-	</div>
-    </form>
+	  <tr>
+	    <th>January</th>
+	    <td>{%if monthly.jan %} <span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>&nbsp; Submitted: {{monthly.jan}}
+	      {%else%}<input type="checkbox" name="month[]" value="1"/>
+	      {%endif%}
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>February</th>
+	    <td>{%if monthly.feb %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>&nbsp;Submitted: {{monthly.feb}}
+	      {%else%}<input type="checkbox" name="month[]" value="2"/>
+              {%endif%}
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>March</th>
+	    <td>{%if monthly.mar %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>&nbsp; Submitted: {{monthly.mar}}
+	      {%else%}<input type="checkbox" name="month[]" value="3"/>
+	      {%endif%}
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>April</th>
+	    <td>{%if monthly.apr %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>&nbsp; Submitted: {{monthly.apr}}
+              {%else%}<input type="checkbox" name="month[]" value="4"/>
+	      {%endif%}
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>May</th>
+	    <td>{%if monthly.may %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>&nbsp; Submitted: {{monthly.may}}
+	      {%else%}<input type="checkbox" name="month[]" value="5"/>
+              {%endif%}
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>June</th>
+	    <td>{%if monthly.jun %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>&nbsp; Submitted: {{monthly.jun}}
+	      {%else%} <input type="checkbox" name="month[]" value="6"/>
+	      {%endif%}
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>July</th>
+	    <td>{%if monthly.jul %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>&nbsp; Submitted: {{monthly.jul}} 
+	      {%else%} <input type="checkbox" name="month[]" value="7"/>
+	      {%endif%}
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>August</th>
+	    <td>{%if monthly.aug %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>&nbsp; Submitted: {{monthly.aug}}
+	      {%else%}<input type="checkbox" name="month[]" value="8"/>
+	      {%endif%}
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>September</th>
+	    <td>{%if monthly.sept %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>&nbsp; Submitted: {{monthly.sept}}
+	      {%else%}<input type="checkbox" name="month[]" value="9"/>
+	      {%endif%}
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>October</th>
+	    <td>{%if monthly.oct %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>&nbsp; Submitted: {{monthly.oct}}
+	      {%else%}<input type="checkbox" name="month[]" value="10"/>
+	      {%endif%}
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>November</th>
+	    <td>{%if monthly.nov %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span> &nbsp; Submitted: {{monthly.nov}}
+	      {%else%}<input type="checkbox" name="month[]" value="11"/>
+	      {%endif%}
+	    </td>
+	  </tr>
+	  <tr>
+	    <th>December</th>
+	    <td>{%if monthly.dec %}<span class="glyphicon glyphicon-check text-success" title="Submitted : {{monthly.jan}}"></span>&nbsp; Submitted: {{monthly.dec}}
+	    {%else%}<input type="checkbox" name="month[]" value="12"/>
+	    {%endif%}
+	    </td>
+	  </tr>
+</tr>
+</tbody>
+</table>
+<div class="panel-footer">
+  <button class="btn btn-primary">Submit</button>
+</div>
+</form>
 </div>

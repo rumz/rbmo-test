@@ -1,18 +1,7 @@
-<form method="POST" id='srch_stud' action="/billing/student" class="form-search">
-  <div class="input-group">
-    <div class="input-group-addon">
-      <select name="student_search_filter" id="student_search_filters" type="radio" >
-	<option value="id_num">ID Number</option>
-	<option value="last_name">Last Name</option>
-	<option value="first_name">First Name</option>
-      </select>
-    </div>
-    <input name="search_student" value="" id='search_student' type="text" class="form-control" placeholder="Search">
-    <span class="input-group-btn">
-      <button name="submit" value="submit" class="btn btn-success" type="submit">
-	<span class="glyphicon glyphicon-search"></span>
-      </button>
-    </span>
-  </div><!-- /btn-group -->
+<form method="POST" id='srch_stud' action="/billing/student" class="form-inline">
+  <a href="/admin/add_edit_user" class="btn btn-default">
+    <span class="glyphicon glyphicon-plus-sign"></span>
+    Add User
+  </a>
 </form>
 

@@ -5,6 +5,9 @@ MONTHS = ((1, 'January'), (2, 'February'), (3, 'March'), (4, 'April'),
           (5, 'May'), (6, 'June'), (7, 'July'), (8, 'August'), (9, 'September'),
           (10, 'October'), (11, 'November'), (12, 'December'))
 
+ALLOCATION = (('PS', 'Personnel Services'),
+              ('MOOE', 'Maintenance and Operating Services'),
+              ('CO', 'Capital Outlay'))
 
 class Permissions(models.Model):
     action = models.CharField(max_length=10)
@@ -81,22 +84,21 @@ class Agency(models.Model):
     class Meta:
         db_table = 'agency'
 
-#its either PS, MOOE, or CO
-class Allocation(models.Model):
-    name = models.CharField(max_length = 100)
 
-    def __unicode__(self):
-        return self.name
+class Notification(models.Model):
+    agency = models.ForeignKey(Agency)
+    date_notify = models.DateField()
+    subject = models.CharField(max_length=45)
+    msg = models.TextField()
 
     class Meta:
-        db_table = 'allocation'
+        db_table = 'notification'
 
-
-class BudgetAllocation(models.Model):
+class BudgetProposal(models.Model):
     year = models.IntegerField()
     activity = models.CharField(max_length = 200)
     agency = models.ForeignKey(Agency)
-    allocation = models.ForeignKey(Allocation)
+    allocation = models.CharField(max_length=4)
     performance_indicator = models.CharField(max_length = 45)
     q1 = models.IntegerField()
     q2 = models.IntegerField()
@@ -114,102 +116,177 @@ class BudgetAllocation(models.Model):
     oct = models.DecimalField(max_digits = 12, decimal_places = 2)
     nov = models.DecimalField(max_digits = 12, decimal_places = 2)
     dec = models.DecimalField(max_digits = 12, decimal_places = 2)
-    total = models.DecimalField(max_digits = 14, decimal_places = 2)
+    total = models.DecimalField(max_digits = 15, decimal_places = 2)
     
     def __unicode__(self):
         return self.activity
 
     class Meta:
-        db_table = 'budget_allocation'
+        db_table = 'budget_proposal'
+        permissions = (('record_wfp', 'Enter data from WFP'),
+                       ('print_report', 'Print Agency WFP Information')
+        )
+        
+    
+
+class WFPData(models.Model):
+    year = models.IntegerField()
+    activity = models.CharField(max_length = 200)
+    agency = models.ForeignKey(Agency)
+    allocation = models.CharField(max_length='4', choices=ALLOCATION)
+    jan = models.DecimalField(max_digits = 12, decimal_places = 2)
+    feb = models.DecimalField(max_digits = 12, decimal_places = 2)
+    mar = models.DecimalField(max_digits = 12, decimal_places = 2)
+    apr = models.DecimalField(max_digits = 12, decimal_places = 2)
+    may = models.DecimalField(max_digits = 12, decimal_places = 2)
+    jun = models.DecimalField(max_digits = 12, decimal_places = 2)
+    jul= models.DecimalField(max_digits = 12, decimal_places = 2)
+    aug = models.DecimalField(max_digits = 12, decimal_places = 2)
+    sept = models.DecimalField(max_digits = 12, decimal_places = 2)
+    oct = models.DecimalField(max_digits = 12, decimal_places = 2)
+    nov = models.DecimalField(max_digits = 12, decimal_places = 2)
+    dec = models.DecimalField(max_digits = 12, decimal_places = 2)
+    total = models.DecimalField(max_digits = 15, decimal_places = 2)
+
+    def __unicode__(self):
+        return self.activity
+
+    class Meta:
+        db_table = 'wfp_data'
         permissions = (('record_wfp', 'Enter data from WFP'),
                        ('print_report', 'Print Agency WFP Information')
         )
 
-class FundRelUtil(models.Model):
-    budgetallocation = models.ForeignKey(BudgetAllocation)
-    month = models.IntegerField(choices=MONTHS)
-    date_release = models.DateTimeField()
-    amount_rel = models.DecimalField(max_digits=12, decimal_places=2)
-    amount_util = models.DecimalField(max_digits=12, decimal_places=2)
+
+class PerformanceTarget(models.Model):
+    wfp_activity = models.ForeignKey(WFPData)
+    indicator = models.CharField(max_length=45)
+    q1 = models.IntegerField()
+    q2 = models.IntegerField()
+    q3 = models.IntegerField()
+    q4 = models.IntegerField()
 
     class Meta:
-        db_table = 'fund_rel_util'
-
-
-class MPFR(models.Model):
+        db_table = 'performancetarget'
+        
+    
+class AllotmentReleases(models.Model):
     year = models.IntegerField()
     agency = models.ForeignKey(Agency)
-    jan = models.DateTimeField(null=True)
-    feb = models.DateTimeField(null=True)
-    mar = models.DateTimeField(null=True)
-    apr = models.DateTimeField(null=True)
-    may = models.DateTimeField(null=True)
-    jun = models.DateTimeField(null=True)
-    jul = models.DateTimeField(null=True)
-    aug = models.DateTimeField(null=True)
-    sept = models.DateTimeField(null=True)
-    oct = models.DateTimeField(null=True)
-    nov = models.DateTimeField(null=True)
-    dec = models.DateTimeField(null=True)
-
-    def __unicode__(self):
-        return self.agency.name
-
-    class Meta:
-        db_table = 'mpfr'
-
-class Requirements(models.Model):
-    SUBMISSION_OPTIONS = (('M', 'Monthly' ), ('Q', 'Quarterly'), ('S', 'Semi Annual'), ('Y', 'Yearly'))
-    name = models.CharField(max_length=75)
-    subs_opt = models.CharField(max_length = 1, choices = SUBMISSION_OPTIONS)
-    requirement_for = models.CharField(max_length=5)
-
-    def __unicode__(self):
-        return self.name
-        
-    class Meta:
-        db_table = 'requirements'
-
-
-
-class MonthlySubmitted(models.Model):
-    year = models.IntegerField()
-    date_submitted = models.DateTimeField()
+    allocation = models.CharField(max_length='4', choices=ALLOCATION)
+    ada_no = models.CharField(max_length=5)
+    date_release = models.DateField()
     month = models.IntegerField()
-    agency = models.ForeignKey(Agency)
-    requirement = models.ForeignKey(Requirements)
-    
-    def __unicode__(self):
-        return self.requirement.name
+    amount_release = models.DecimalField(max_digits=15, decimal_places=2)
 
     class Meta:
-        db_table = 'monthly_submitted'
+        db_table = 'allotmentreleases'
+
+"""
+class FundRelease(models.Model):
+    ada = models.IntegerField()
+    agency = models.ForeignKey(Agency)
+    year = models.IntegerField()
+    month = models.IntegerField()
+    date_released = models.IntegerField
+    allocation = models.CharField(max_length=4)
+    amount = models.DecimalField(max_digits=15, decimal_places=2)
+
+    def unicode(self):
+        return unicode(self.ada)
         
-    
-class QuarterSubmitted(models.Model):
-    date_submitted = models.DateTimeField()
-    quarter = models.IntegerField()
-    agency = models.ForeignKey(Agency)
-    requirement = models.ForeignKey(Requirements)
-
-    def __unicode__(self):
-        return self.requirement.name
-
     class Meta:
-        db_table = 'quarterly_submitted'
-     
+        db_table = 'fund_release'
+"""
 
+class MPFRO(models.Model):
+    agency = models.ForeignKey(Agency)
+    year = models.IntegerField()
+    month = models.IntegerField(choices=MONTHS)
+    activity = models.OneToOneField(WFPData)
+    allot_receive = models.DecimalField(max_digits=15, decimal_places=2)
+    incurred = models.DecimalField(max_digits=15, decimal_places=2)
+    remaining = models.DecimalField(max_digits=15, decimal_places=2)
+    remarks = models.CharField(max_length=200)
+    class Meta:
+        db_table = 'mpfro'
 
-class YearlySubmitted(models.Model):
+class MPFROAccomplishment(models.Model):
+    mpfro = models.ForeignKey(MPFRO)
+    p_target = models.OneToOneField(PerformanceTarget)
+    target = models.IntegerField()
+    accomplished = models.IntegerField()
+    variance = models.IntegerField()
+    
+    class Meta:
+        db_table = 'mpfro_acc'
+
+        
+class WFPSubmission(models.Model):
     date_submitted = models.DateTimeField()
     year = models.IntegerField()
     agency = models.ForeignKey(Agency)
-    requirement = models.ForeignKey(Requirements)
-
+    
     def __unicode__(self):
-        return self.requirement.name
+        return self.year
 
     class Meta:
-        db_table = 'yearly_submitted'
+        db_table = 'wfp_submission'
+
+class FundBalances(models.Model):
+    year = models.IntegerField()
+    agency = models.ForeignKey(Agency)
+    ps = models.DecimalField(max_digits=15, decimal_places=2)
+    mooe = models.DecimalField(max_digits=15, decimal_places=2)
+    co = models.DecimalField(max_digits=15, decimal_places=2)
+
+    class Meta:
+        db_table = 'fund_balances'
 
 
+class MPFRSubmission(models.Model):
+    year = models.IntegerField()
+    agency = models.ForeignKey(Agency)
+    jan = models.DateField(null=True)
+    feb = models.DateField(null=True)
+    mar = models.DateField(null=True)
+    apr = models.DateField(null=True)
+    may = models.DateField(null=True)
+    jun = models.DateField(null=True)
+    jul = models.DateField(null=True)
+    aug = models.DateField(null=True)
+    sept = models.DateField(null=True)
+    oct = models.DateField(null=True)
+    nov = models.DateField(null=True)
+    dec = models.DateField(null=True)
+
+    class Meta:
+        db_table = 'mpfr_submission'
+
+
+class QuarterlyReq(models.Model):
+    name = models.CharField(max_length=100)
+    
+    class Meta:
+        db_table = 'quarterly_req'
+
+class QuarterReqSubmission(models.Model):
+    agency = models.ForeignKey(Agency)
+    requirement = models.ForeignKey(QuarterlyReq)
+    year = models.IntegerField()
+    quarter = models.IntegerField()
+    date_submitted = models.DateField()
+
+    class Meta:
+        db_table = 'quarter_req_submit'
+    
+
+class CoRequest(models.Model):
+    date_received = models.DateField()
+    agency = models.ForeignKey(Agency)
+    subject = models.CharField(max_length=100)
+    action = models.CharField(max_length=100)
+    status = models.CharField(max_length=150)
+
+    class Meta:
+        db_table = 'co_request'

@@ -1,14 +1,23 @@
 {%extends "./admin/base.html" %}
 
+{%block css%}
+<script type="text/javascript" src="/static/js/list.js"></script>z
+{%endblock%}
+
+{%block headerpage%}
+<div class="container">
+    <h3>{{agency.name}}</h3>
+    <hr/>
+</div>
+{% endblock %}
+
 {% block left-content %}
   {% include "./admin/agency_tabs.html" %}
 {% endblock %}
 
 {% block right-content %}
 <div class="col-sm-9">
-  <h2>{{agency.name}}</h2>
-  <h3>WFP Form</h3>
-  <hr/>
+  <h4>Work and Financial Plan Form</h4>
   {% include "msg_pane.html" %}
   <form action="/agency/wfp/wfp_form" role="form" method="POST" class="form-horizontal">{% csrf_token %}
     <div class="form-group">
@@ -23,13 +32,6 @@
     </div>
 
     <div class="form-group">
-      <label class="col-sm-3">Allocation Type</label>
-      <div class="col-sm-9">
-	{{form.allocation}}
-      </div>
-    </div>
-
-    <div class="form-group">
       <label class="col-sm-3">Program/Activity</label>
       <div class="col-sm-9">
 	{{form.activity}}
@@ -37,37 +39,75 @@
     </div>
 
     <div class="form-group">
+      <label class="col-sm-3">Allocation Type</label>
+      <div class="col-sm-9">
+	<select name="allocation" class="form-control">
+	  <option value="PS">Personnel Services</option>
+	  <option value="MOOE">Maintenance and Operating Expenses</option>
+	  <option value="CO">Capital Outlay</option>
+	</select>
+      </div>
+    </div>
+
+
+    <hr/>
+    <h3>Performance Target</h3>
+    <hr/>
+    <h4>Physical Target</h4>
+    <div class="form-group">
       <label class="col-sm-3">Performance Indicator</label>
       <div class="col-sm-9">
-	{{form.performance_indicator}}
+	<input type="text" class="form-control" name="pi" id="pi">
       </div>
     </div>
 
-    <hr/>
-    <h4>Physical Performance Target</h4>
     <div class="form-group">
-      <div class="col-sm-3">
-	<label>1st Quarter</label>
-	{{form.q1}}
+      <label class="col-sm-3">Quarterly Target</label>
+      <div class="col-sm-2">
+	<label>Q1</label>
+	<input type="number" id="q1" name="q1" class="form-control" value="0">
       </div>
 
-      <div class="col-sm-3">
-	<label>2nd Quarter</label>
-	{{form.q2}}
+      <div class="col-sm-2">
+	<label>Q2</label>
+	<input type="number" id="q2" name="q2" class="form-control" value="0">
       </div>
 
-      <div class="col-sm-3">
-	<label>3rd Quarter</label>
-	{{form.q3}}
-      </div>
+      <div class="col-sm-2">
+	<label>Q3</label>
+	<input type="number" id="q3" name="q3" class="form-control" value="0">
+      </div>      
 
+      <div class="col-sm-2">
+	<label>Q4</label>
+	<input type="number" id="q4" name="q4" class="form-control" value="0">
+      </div>
+      
       <div class="col-sm-3">
-	<label>4th Quarter</label>
-	{{form.q4}}
+	<a href="javascript:addPhysicalTarget()" class="btn btn-default">
+	  <span  class="glyphicon glyphicon-plus-sign"></span>
+	  Add
+	</a>
       </div>
     </div>
+    <input type="hidden" id="pi_count" name="pi_count" value="0">
+
+    <table id="pi-table" class="table" style="display: none;" >
+      <thead>
+	<tr>
+	  <th></th>
+	  <th>Performance Indicator</th>
+	  <th>1st Quarter</th>
+	  <th>2nd Quarter</th>
+	  <th>3rd Quarter</th>
+	  <th>4th Quarter</th>
+	</tr>
+      </thead>
+      <tbody id="pi-table-content">
+      </tbody>
+    </table>
     <hr/>
-    <h4>Monthly Financial Performance Target</h4>
+    <h4>Financial Target</h4>
     <div class="form-group">
       <div class="col-sm-3">
 	<label>January</label>
@@ -126,3 +166,6 @@
   </form>
 </div>
 {% endblock %}
+{%block scripts%}
+<script type="text/javascript" src="/static/js/wfp_ajax.js"></script>
+{%endblock%}

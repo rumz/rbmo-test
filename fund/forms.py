@@ -1,12 +1,16 @@
 from django import forms
-from rbmo.models  import BudgetAllocation
+from rbmo.models  import AllotmentReleases
 from django.contrib.auth.models import User
 
 
-class FundRequestForm(forms.Form):
+class AllotmentReleaseForm(forms.Form):
     MONTHS = ((1, 'January'), (2, 'February'), (3, 'March'), (4, 'April'), 
           (5, 'May'), (6, 'June'), (7, 'July'), (8, 'August'), (9, 'September'),
           (10, 'October'), (11, 'November'), (12, 'December'))
+    ada = forms.IntegerField(widget=forms.NumberInput(attrs={
+                            'class'    : 'form-control',
+                            'required' : 'True'
+    }))
 
     month = forms.ChoiceField(choices=MONTHS,
                               widget=forms.Select(attrs={
@@ -18,4 +22,9 @@ class FundRequestForm(forms.Form):
                'required': 'True'
         }
     ))
+
+
+    class Meta:
+        model = AllotmentReleases
+        fields = ['ada', 'month', 'amount_release']
 
